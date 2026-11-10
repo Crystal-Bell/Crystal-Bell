@@ -73,3 +73,31 @@ Here are some ideas to get you started:
 - 😄 Pronouns: ...
 - ⚡ Fun fact: ...
 -->
+
+.github/workflows/update-readme.yml
+
+name: Update Profile README Activity
+
+on:
+  schedule:
+    # Runs automatically every 6 hours
+    - cron: '0 */6 * * *'
+  workflow_dispatch: # Allows manual trigger from the Actions tab
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Update README with recent activity
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Update Readme Activity
+        uses: jamesgeorge007/github-activity-readme@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          MAX_LINES: 5
